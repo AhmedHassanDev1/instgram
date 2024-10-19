@@ -12,8 +12,6 @@ let packageDefinition =loadSync('./user.proto', {
 
 let userProto=loadPackageDefinition(packageDefinition).user
 
-
-
 async function gRPC_Server(){
    let server=new Server()
    server.addService(userProto.get_user.service,
