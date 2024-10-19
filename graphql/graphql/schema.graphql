@@ -1,0 +1,93 @@
+
+
+type User {
+    id:ID!
+    name:String!
+    image:String
+    story:ID
+   
+}
+
+
+type Post{
+   id:ID!
+   user_id:ID!
+   title:String
+   user:User
+   type:String
+   count:Int
+   media:[Media!]!
+   likes_count:Int!
+   comments_count:Int!
+   isLike:Boolean!
+   isBookmark:Boolean!
+   createdAt:String
+}
+
+type Media{
+    id:ID!
+    url:String!
+    type:String!
+    index:Int!
+    width:Int!
+    height:Int!
+}
+
+type Comment{
+    id:ID!
+    title:String!
+    user:User
+    isLike:Boolean!
+    likes_count:Int!
+    replies_count:Int!
+    createdAt:String
+
+}
+
+type Replay{
+    id:ID!
+    title:String!
+    user:User
+    isLike:Boolean!
+    likes_count:Int!
+    createdAt:String
+
+}
+
+type Query {
+  
+   get_home_posts(postInput:RangeResultsInput):[Post!]
+   get_expoler_posts(postInput:RangeResultsInput):[Post!]
+   get_user_posts(user_id:ID,postInput:RangeResultsInput):[Post!]
+   get_post_by_id(post_id:ID):Post
+   get_post_comments(post_id:ID,commentInput:RangeResultsInput):[Comment!]
+   get_user_bookmarks(bookmarksInput:RangeResultsInput):[Post!]
+   get_comment_replies(comment_id:ID,commentInput:RangeResultsInput):[Replay!]
+}
+
+type Mutation {
+   delete_post(post_id:ID!):ID
+   add_like_post(post_id:ID):String 
+   remove_like_post(post_id:ID):String  
+   add_like_comment(comment_id:ID):String  
+   remove_like_comment(comment_id:ID):String  
+   add_bookmarks(post_id:ID):String  
+   remove_bookmarks(post_id:ID):String 
+   add_comment(comment:commentInput):Comment
+   delete_comment(comment_id:ID!):ID
+   replay_comment(comment_id:ID!,text:String):Replay
+   remove_like_replay(replay_id:ID):String  
+   add_like_replay(replay_id:ID):String  
+   
+}
+
+
+input commentInput{
+    post_id:ID!
+    text:String!
+}
+
+input RangeResultsInput{
+    offset:Int
+    limit:Int
+}

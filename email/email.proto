@@ -1,0 +1,19 @@
+
+syntax = "proto3";
+
+package verification_code;
+
+service verification_code{
+  rpc get_verification_code (verification_code_request) returns (verification_code_response);
+}
+
+
+message verification_code_request {
+  string email = 1;
+  string name=2;
+}
+
+
+message verification_code_response {
+  string code = 1;
+}

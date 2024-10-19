@@ -1,0 +1,32 @@
+syntax ="proto3";
+
+package user;
+
+
+service get_user{
+   rpc GetUserById (user_request) returns (user_response); 
+   rpc GetUsersImage (user_request_images) returns (user_response_images);
+}
+
+message user_request{
+   string id = 1;
+}
+
+message user_response{
+    string id = 1;
+    string name = 2;
+    string image =3;
+}
+
+message user_request_images{
+ repeated string ids = 1;
+}
+
+message user_response_images{
+ repeated images resultes =1;
+ 
+ message images {
+  string user_id=1;
+  string url =2;
+ }
+}

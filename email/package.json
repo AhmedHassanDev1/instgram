@@ -1,0 +1,23 @@
+{
+  "name": "email",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon server",
+    "start": "node server"
+  },
+  "type": "module",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@grpc/grpc-js": "^1.11.3",
+    "@grpc/proto-loader": "^0.7.13",
+    "dotenv": "^16.4.5",
+    "mongoose": "^8.6.3",
+    "nodemailer": "^6.9.15",
+    "redis": "^4.7.0",
+    "socket.io": "^4.8.0"
+  }
+}

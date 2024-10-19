@@ -1,0 +1,98 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Post {
+  id             String      @id @default(uuid())
+  user_id        String
+  title          String?
+  likes_count    Int         @default(0)
+  comments_count Int         @default(0)
+  createdAt      DateTime    @default(now())
+  type           postType
+  count          Int         @default(1)
+  media          Media[]
+  comment        Comment[]
+  bookmarks      Bookmarks[]
+
+  Likes Likes[]
+}
+
+model Media {
+  id        String @id @default(uuid())
+  Post_id   String
+  url       String
+  type      String
+  width     Int
+  height    Int
+  public_id String
+  index     Int
+  post      Post?  @relation(fields: [Post_id], references: [id],onDelete:Cascade)
+}
+
+model Likes {
+  post_id   String
+  user_id   String
+  post      Post?    @relation(fields: [post_id], references: [id],onDelete:Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([post_id, user_id])
+}
+
+model Bookmarks {
+  user_id   String
+  post_id   String
+  post      Post?    @relation(fields: [post_id], references: [id],onDelete:Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([user_id, post_id])
+}
+
+model Comment {
+  id            String         @id @default(uuid())
+  user_id       String
+  post_id       String
+  title         String
+  replies_count Int            @default(0)
+  likes_count   Int            @default(0)
+  createdAt     DateTime       @default(now())
+  post          Post?          @relation(fields: [post_id], references: [id],onDelete:Cascade)
+  replaies      Replay[]
+  likes         CommentLikes[]
+}
+
+model Replay {
+  id          String        @id @default(uuid())
+  comment_id  String
+  user_id     String
+  title       String
+  createdAt   DateTime      @default(now())
+  likes_count Int           @default(0)
+  comment     Comment?      @relation(fields: [comment_id], references: [id],onDelete:Cascade)
+  likes       ReplayLikes[]
+}
+
+model CommentLikes {
+  id         String   @id @default(uuid())
+  user_id    String
+  comment_id String
+  comment    Comment? @relation(fields: [comment_id], references: [id],onDelete:Cascade)
+}
+
+model ReplayLikes {
+  id        String  @id @default(uuid())
+  user_id   String
+  replay_id String
+  replay    Replay? @relation(fields: [replay_id], references: [id],onDelete:Cascade)
+}
+
+enum postType {
+  image
+  video
+  hybrid
+}
