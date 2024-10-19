@@ -14,4 +14,4 @@ DataBases:Postgresql
 ORM:Prisma
 Message Queue: RabbitMQ
 synchronous communication:GRPC
-File Storage:cloudinary
+File Storage:cloudinary 
